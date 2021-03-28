@@ -6,4 +6,4 @@ Structure goes like this:
 - Lab01
 - Lab02\
 ...
-- Lab03
+- Lab06
