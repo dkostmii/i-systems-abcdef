@@ -11,9 +11,7 @@ namespace Lab01.Bags
 {
     public class FruitBasket : ProductBag
     {
-        public FruitBasket(HashSet<String> fruits) : base(fruits)
-        {
-        }
+        public FruitBasket(HashSet<String> fruits) : base(fruits) { }
 
         public override Product TakeProduct(String product)
         {

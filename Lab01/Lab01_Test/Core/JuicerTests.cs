@@ -29,6 +29,7 @@ namespace Lab01_Test.Core
             Juicer juicer = Juicer.GetInstance();
 
             Assert.ThrowsException<Exception>(() => { Glass glass = juicer.Glass; });
+
         }
 
         [TestMethod]
@@ -41,6 +42,8 @@ namespace Lab01_Test.Core
                 juicer.Glass = new Glass();
                 juicer.Glass = new Glass(); 
             });
+
+            Glass glass = juicer.Glass;
         }
 
         [TestMethod]

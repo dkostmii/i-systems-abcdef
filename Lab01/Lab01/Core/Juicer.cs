@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Lab01.Core
 {
@@ -13,6 +14,8 @@ namespace Lab01.Core
         private static Juicer instance;
 
         private static readonly object _lock = new object();
+
+        private static bool inUse = false;
 
         private Glass glass;
 
@@ -35,23 +38,31 @@ namespace Lab01.Core
         {
             get
             {
-                if (this.glass != null)
+                lock (_lock)
                 {
-                    Glass glass = this.glass;
-                    this.glass = null;
-                    return glass;
+                    if (this.glass != null)
+                    {
+                        Glass glass = this.glass;
+                        this.glass = null;
+                        inUse = false;
+                        return glass;
+                    }
+                    throw new Exception("There's no glass in juicer.");
                 }
-                throw new Exception("There's no glass in juicer.");
             }
             set
             {
-                if (this.glass == null)
+                lock (_lock)
                 {
-                    this.glass = value;
-                }
-                else
-                {
-                    throw new Exception("There is already glass in the juicer.");
+                    if (this.glass == null)
+                    {
+                        this.glass = value;
+                        inUse = true;
+                    }
+                    else
+                    {
+                        throw new Exception("There is already glass in the juicer.");
+                    }
                 }
             }
         }
