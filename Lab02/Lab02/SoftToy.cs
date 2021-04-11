@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab02.Classes.Facade
+namespace Lab02
 {
-    class Foo
-    {
-    }
+    class SoftToy : Toy { }
 }
