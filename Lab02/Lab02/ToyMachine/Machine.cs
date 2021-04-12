@@ -114,7 +114,7 @@ namespace Lab02.ToyMachine
         public Toy GetToy()
         {
             toyExtractor.ExtractToy();
-            if (toyTray.Empty)
+            if (toyTray.Empty())
                 throw new Exception("Seems you don't have enough credits :(");
 
             Toy toy = toyTray.GetToys().First();

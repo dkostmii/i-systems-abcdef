@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab02.ToyMachine
 {
-    class ToyTray
+    public class ToyTray
     {
         List<Toy> toys;
         public ToyTray()
@@ -32,9 +32,9 @@ namespace Lab02.ToyMachine
             throw new Exception("Tray is empty");
         }
 
-        public bool Empty
+        public bool Empty()
         {
-            get { return toys.Count == 0; }
+            return toys.Count == 0;
         }
     }
 }

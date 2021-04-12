@@ -6,11 +6,35 @@ using System.Threading.Tasks;
 
 namespace Lab02
 {
-    class Toy
+    public class Toy
     {
-        public String Name { get; init; }
+        private decimal _price;
+        private String _name;
 
-        public decimal Price { get; init; }
+        public String Name
+        {
+            get { return _name; }
+            init
+            {
+                if (String.IsNullOrEmpty(value))
+                {
+                    throw new Exception("Name cannot be empty");
+                }
+                _name = value;
+            }
+        }
+
+        public decimal Price
+        {
+            get { return _price; }
+            init
+            {
+                if (value > 0)
+                    _price = value;
+                else
+                    throw new Exception("Price cannot be negative");
+            }
+        }
 
         public override String ToString()
         {

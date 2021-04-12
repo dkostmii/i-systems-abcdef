@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab02
 {
-    class Money : IEquatable<Money>
+    public class Money : IEquatable<Money>
     {
         private decimal _amount;
         public decimal Amount 

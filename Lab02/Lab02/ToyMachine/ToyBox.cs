@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab02.ToyMachine
 {
-    class ToyBox
+    public class ToyBox
     {
         private List<Toy> toys;
 
@@ -36,6 +36,13 @@ namespace Lab02.ToyMachine
             }
 
             throw new Exception("Toy box is empty!");
+        }
+
+        // Util methods
+
+        public bool Empty()
+        {
+            return toys.Count == 0;
         }
     }
 }
