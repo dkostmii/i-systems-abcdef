@@ -6,6 +6,8 @@ Simple web application for blog posting using **React** and **ASP.NET WebAPI**.
 
 **simple-blog-app** - Front-end for project
 
+![simple-blog-app](misc/screen.png)
+
 ## Prequisities
 
 - Visual Studio with tools for ASP.Net Development
