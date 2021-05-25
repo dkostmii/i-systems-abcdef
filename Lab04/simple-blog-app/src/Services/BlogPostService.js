@@ -29,7 +29,7 @@ export default class BlogPostService {
       }, error => { return { error }})
   }
 
-  postBlogPost(title, authorId, contents) {
+  postBlogPost({ title, authorId, contents }) {
     return fetch(this.host + '/BlogPosts', {
       method: 'POST',
       headers: {

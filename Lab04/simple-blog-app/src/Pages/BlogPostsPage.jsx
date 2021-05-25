@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import { Link, Route, Switch, useRouteMatch } from 'react-router-dom'
 
 import BlogPost from '../Components/BlogPost'
+
+import './BlogPostPage.css'
 
 function BlogPostsPage({ blogPostService, userService }) {
   // State
@@ -9,6 +12,18 @@ function BlogPostsPage({ blogPostService, userService }) {
     isLoaded: false,
     error: null
   })
+
+  const [post, setPost] = useState({
+    authorId: null,
+    title: '',
+    contents: '',
+  })
+
+  const refreshPostData = data => setPost(prevState => { return {...prevState, ...data} })
+
+  
+  //URL match
+  let match = useRouteMatch()
 
   // Validating services
   if (!blogPostService.getAllPosts) {
@@ -85,8 +100,40 @@ function BlogPostsPage({ blogPostService, userService }) {
 
   return ( 
     <div>
-      <h1>Blog Posts Page</h1>
-      {render}
+      <div className="blog-post-page-links">
+        <Link to={match.url}>View Blog</Link>
+        <Link to={`${match.url}/New`}>Create a blog post</Link>
+      </div>
+      
+      <Switch>
+        <Route exact path={match.path}>
+          <h1>Blog Posts Page</h1>
+          {render}
+        </Route>
+
+        <Route exact path={`${match.path}/New`}>
+          <div className="new-post-form">
+            <input type="text" 
+                  placeholder="Author ID"
+                  onChange={ e => refreshPostData({ authorId: e.target.value }) }
+            />
+            <input type="text" 
+                  placeholder="Title"
+                  onChange={ e => refreshPostData({ title: e.target.value }) }
+            />
+            <input type="text"
+                  placeholder="Content"
+                  onChange={ e => refreshPostData({ contents: e.target.value }) }
+            />
+            <button 
+              onClick={ () => blogPostService.postBlogPost(post) }
+              disabled={
+                (!post.authorId && post.authorId !== 0) || !post.title || !post.contents || post.authorId < 0 }>
+              Create
+            </button>
+          </div>
+        </Route>
+      </Switch>
     </div>
   )
 }

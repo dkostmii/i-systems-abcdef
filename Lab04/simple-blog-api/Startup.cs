@@ -12,6 +12,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
+using simple_blog_api.Models;
+using simple_blog_api.Types;
+using simple_blog_api.Repositories;
+using Newtonsoft.Json;
+using System.IO;
+
 namespace simple_blog_api
 {
     public class Startup
@@ -24,10 +30,51 @@ namespace simple_blog_api
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+
+        List<BlogPost> LoadFakePosts()
+        {
+            var blogPosts = new List<BlogPost>();
+            String dir = Directory.GetCurrentDirectory();
+            using (StreamReader r = new StreamReader(dir + "\\Datasets\\BlogPosts.json"))
+            {
+                string json = r.ReadToEnd();
+                List<BlogPostData> blogPostData = JsonConvert.DeserializeObject<List<BlogPostData>>(json);
+
+                foreach (var item in blogPostData)
+                {
+                    blogPosts.Add(new BlogPost() { Id = item.id, AuthorId = item.userId, Title = item.title, Contents = item.contents });
+                }
+            }
+
+            return blogPosts;
+        }
+
+        List<User> LoadFakeUsers()
+        {
+            var users = new List<User>();
+            String dir = Directory.GetCurrentDirectory();
+            using (StreamReader r = new StreamReader(dir + "\\Datasets\\Users.json"))
+            {
+                string json = r.ReadToEnd();
+                List<UserData> blogPostData = JsonConvert.DeserializeObject<List<UserData>>(json);
+
+                foreach (var item in blogPostData)
+                {
+                    users.Add(new User() { Id = item.id, FullName = item.fullName, Email = item.email });
+                }
+            }
+
+            return users;
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
 
             services.AddControllers();
+
+            services.AddSingleton<BlogPostsRepository>(provider => new BlogPostsRepository(LoadFakePosts()));
+            services.AddSingleton<UsersRepository>(provider => new UsersRepository(LoadFakeUsers()));
+
             services.AddCors();
             services.AddSwaggerGen(c =>
             {
