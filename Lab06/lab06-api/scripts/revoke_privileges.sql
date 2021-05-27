@@ -1,0 +1,15 @@
+REVOKE ALL ON ALL TABLES IN SCHEMA public FROM psen_access;
+
+REVOKE ALL ON ALL TABLES IN SCHEMA public FROM psen_modify;
+
+
+ALTER DEFAULT PRIVILEGES IN SCHEMA public REVOKE SELECT, UPDATE, INSERT, DELETE ON TABLES FROM psen_modify;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public REVOKE SELECT ON TABLES FROM psen_access;
+
+/*REASSIGN OWNED BY psen_access TO psen;*/
+DROP OWNED BY psen_access;
+DROP ROLE psen_access;
+
+/*REASSIGN OWNED BY psen_modify TO psen;*/
+DROP OWNED BY psen_modify;
+DROP ROLE psen_modify;

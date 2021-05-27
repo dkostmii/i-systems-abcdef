@@ -1,0 +1,46 @@
+{
+  "PSEN_WRITE": {
+    "username": "modify_user",
+    "password": "qwerty1234",
+    "port": 5432,
+    "database": "psen_project",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "development": {
+    "PSEN_READ": {
+      "username": "readonly_user",
+      "password": "qwerty1234",
+      "port": 5432,
+      "database": "psen_project",
+      "host": "127.0.0.1",
+      "dialect": "postgres"
+    },
+    "PSEN_WRITE": {
+      "username": "modify_user",
+      "password": "qwerty1234",
+      "port": 5432,
+      "database": "psen_project",
+      "host": "127.0.0.1",
+      "dialect": "postgres"
+    }
+  },
+  "production": {
+    "PSEN_Read": {
+      "username": "readonly_user",
+      "password": "qwerty1234",
+      "port": 5432,
+      "database": "psen_project",
+      "host": "127.0.0.1",
+      "dialect": "postgres"
+    },
+    "PSEN_Write": {
+      "username": "modify_user",
+      "password": "qwerty1234",
+      "port": 5432,
+      "database": "psen_project",
+      "host": "127.0.0.1",
+      "dialect": "postgres"
+    }
+  }
+}
