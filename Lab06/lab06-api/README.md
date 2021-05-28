@@ -1,4 +1,37 @@
-# Lab05 SOA Project
+# Lab06 Backend for Three Tier Project
+
+Based on **Lab05 SOA Project**, adding some functionality, like *listing all users with pagination*, *getting currently logged user* and *modifying data of that user*.
+
+
+# Added functionality
+
+Added abillity to use external host URL such as *http://example.com:3000/*
+
+Server verifies, that it's available at that host, through generating some token, which is injected into **Container** and sending it to *maybe-itself*, and if token is the same as injected, then host containing *definitely-itself*.
+
+Also, added new routes:
+
+- **hostcheck/** GET **!disposes**
+
+  Provided hostcheck token
+
+  (accepts first request, if **EXTHOST** is provided in .env, otherwise ignores).
+
+- **api/allusers** GET
+
+  List all users.
+  Accepts pagination params: *limit* and *offset*.
+
+- **api/profile** GET, PUT
+
+  Get current user data.
+
+  Update current user data.
+
+  Both require *id* in request body.
+
+
+And as a before...
 
 A simple use case REST API powered by **PostgreSQL**, **Node.js**, **Sequelize ORM**, **Express** written in *Typescript.*
 
@@ -34,22 +67,30 @@ In simple words this is the container of services. In this project we have *Sequ
 Available routes
 
 - **status/** GET, HEAD 
+
   Healthcheck routes.
 
 - **api/** GET
+
   List available API routes.
 
 - **api/auth/** GET
+
   List available auth operations such as **signin** or **signup**.
 
 - **api/auth/signin** POST
+
   Sign in user.
   Requires *login* and *password* in request body.
 
 - **api/auth/signup** POST
+
   Register new user.
+
   Requires *email*, *phone*, *password*, *fullName* and *role* in request body.
 
+
+\
 Examples of requests:
 
 - Using PowerShell:

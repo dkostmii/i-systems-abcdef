@@ -25,7 +25,7 @@ export class AuthService {
     @Inject('logger') private logger: Logger
   ) { }
 
-  private hideSensitive(data: IUser): IUserDTO {
+  hideSensitive(data: IUser): IUserDTO {
     return {
       id: data.id,
       email: data.email,
@@ -35,7 +35,7 @@ export class AuthService {
     }
   }
 
-  private async attachUserRole(data: IUserDb): Promise<IUser> {
+  async attachUserRole(data: IUserDb): Promise<IUser> {
     return {
       id: data.id,
       email: data.email,

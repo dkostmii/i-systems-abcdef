@@ -28,13 +28,13 @@ function Message(verified?: boolean) {
         hostname: config.host.name,
         port: config.port,
         method: 'GET',
-        path: '/hostcheck'
+        path: '/hostcheck',
       }
 
-      const req = http.request(options, res => {
+      const req = http.request(options, (res: any) => {
         let body = ''
 
-        res.on('data', data => {
+        res.on('data', (data: string) => {
           body += data
         })
 
@@ -55,7 +55,7 @@ function Message(verified?: boolean) {
         })
       })
 
-      req.on('error', err => {
+      req.on('error', (err: string) => {
         Logger.error("Cannot verify provided EXTHOST!")
 
         Logger.silly(err)
