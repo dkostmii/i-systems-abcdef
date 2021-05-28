@@ -31,7 +31,7 @@ Also, added new routes:
   Both require *id* in request body.
 
 
-And as a before...
+# And as a before...
 
 A simple use case REST API powered by **PostgreSQL**, **Node.js**, **Sequelize ORM**, **Express** written in *Typescript.*
 
