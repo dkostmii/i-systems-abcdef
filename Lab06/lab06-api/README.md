@@ -17,18 +17,25 @@ Also, added new routes:
 
   (accepts first request, if **EXTHOST** is provided in .env, otherwise ignores).
 
-- **api/allusers** GET
+- **api/allusers?id=** GET
 
   List all users.
   Accepts pagination params: *limit* and *offset*.
 
-- **api/profile** GET, PUT
+  *id* param to imitate login (to view email and phone of other users)
+
+- **api/profile?id=** GET, PUT
 
   Get current user data.
 
   Update current user data.
 
-  Both require *id* in request body.
+  GET requires *id* param to imitate login
+  PUT requires *id* prop in body
+
+- **api/getroles** GET
+
+  List all user roles.
 
 
 # And as a before...
