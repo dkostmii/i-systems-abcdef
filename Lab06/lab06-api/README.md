@@ -48,6 +48,10 @@ Prequisities:
 - Node.js 16.x.x
 - Yarn
 
+> Open pgAdmin 4 and using SQL Query Tool open and run SQL sripts inside `scripts` folder in appropriate sequence: `database.sql -> roles.sql -> privileges.sql -> users.sql -> db_owner.sql`
+
+> Also change `src/config/config.json` to match your db credentials
+
 Install project dependencies:
 `yarn install`
 
