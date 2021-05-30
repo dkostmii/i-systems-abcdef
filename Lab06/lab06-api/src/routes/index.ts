@@ -5,6 +5,7 @@ import config from '../config'
 import Auth from './auth'
 import UserProfile from './user'
 import AllUsers from './allusers'
+import Roles from './role'
 
 import { buildUrl } from '../util/buildurl'
 
@@ -14,13 +15,15 @@ export default function(): Router {
   Auth(router)
   AllUsers(router)
   UserProfile(router)
+  Roles(router)
 
   // Verbose available routes
   router.get('/', (req, res) => {
     return res.status(200).json({ 
       auth: buildUrl(config.api.prefix, '/auth'),
       allusers: buildUrl(config.api.prefix, '/allusers'),
-      profile: buildUrl(config.api.prefix, '/profile')
+      profile: buildUrl(config.api.prefix, '/profile'),
+      roles: buildUrl(config.api.prefix, '/getroles')
     })
   })
 

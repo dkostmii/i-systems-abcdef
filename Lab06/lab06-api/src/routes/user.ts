@@ -19,16 +19,17 @@ export default function(app: Router) {
 
   route.get('/', (req, res) => {
     const logger: Logger = Container.get('logger')
-    logger.info('[/profile] Calling / endpoint with body: ' + req.body)
+    logger.info('[/profile] Calling / endpoint with body: ' + JSON.stringify(req.body))
     
     const authServiceInstance = Container.get(AuthService)
 
-    const { id } = req.body as { id?: number }
+    // id exists if user logged in
+    const { id } = req.query as { id?: number }
 
     if (id) {
       const readUserModel: any = Container.get(config.db.dbReadPrefix + 'User')
 
-      readUserModel.findByPk(id)
+      return readUserModel.findByPk(id)
         .then(async (found?: IUserDb) => {
           if (found) {
             return res.status(200).json({
@@ -47,10 +48,11 @@ export default function(app: Router) {
 
   route.put('/', (req, res) => {
     const logger: Logger = Container.get('logger')
-    logger.info('[/profile] Calling / endpoint with body: ' + req.body)
+    logger.info('[/profile] Calling / endpoint with body: ' + JSON.stringify(req.body))
 
     const authServiceInstance = Container.get(AuthService)
 
+    // id exists if user logged in
     const { id } = req.body as { id?: number }
 
     const updateData: Partial<IUserSignUpDTO> = req.body as Partial<IUserSignUpDTO>
@@ -70,11 +72,11 @@ export default function(app: Router) {
                 return res.status(500).json({ message: 'Error on updating user record' })
               }
 
-              return res.status(200).json(
-                authServiceInstance.hideSensitive(
+              return res.status(200).json({
+                user: authServiceInstance.hideSensitive(
                   await authServiceInstance.attachUserRole(updatedUser)
                 )
-              )
+              })
             })
         })
     }

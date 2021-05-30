@@ -14,6 +14,8 @@ export type IUserDb = Omit<IUser, "role"> & { userRoleId: number }
 
 export type IUserDTO = Omit<IUser, "password" | "salt">;
 
+export type IUserPublic = Omit<IUser, "password" | "salt" | "email" | "phone">;
+
 export interface IUserSignInDTO {
   login: string,
   password: string, // non hashed password

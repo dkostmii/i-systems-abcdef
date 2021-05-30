@@ -8,7 +8,6 @@ import config from '../config'
 
 import { AuthService } from '../services/auth'
 import { IUserSignInDTO, IUserSignUpDTO } from '../interfaces/user'
-import { sign } from 'crypto'
 
 import { buildUrl } from '../util/buildurl'
 
@@ -21,7 +20,7 @@ export default function(app: Router) {
   route.get('/', (req, res) => {
     return res.status(200).json({
       signIn: buildUrl(config.api.prefix, '/auth/signin'),
-      singUp: buildUrl(config.api.prefix, '/auth/signup'),
+      signUp: buildUrl(config.api.prefix, '/auth/signup'),
     })
   })
 

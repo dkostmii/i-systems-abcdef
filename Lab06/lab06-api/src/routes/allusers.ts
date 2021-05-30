@@ -20,9 +20,11 @@ export default function(app: Router) {
 
   route.get('/', (req, res) => {
     const logger: Logger = Container.get('logger')
-    logger.info('[/allusers] Calling / endpoint with body: ' + req.body)
+    logger.info('[/allusers] Calling / endpoint with body: ' + JSON.stringify(req.body))
 
     const { limit, offset } = req.query as { limit?: number, offset?: number }
+
+    const { id } = req.query as { id?: number }
 
     const authServiceInstance = Container.get(AuthService)
 
@@ -47,7 +49,16 @@ export default function(app: Router) {
           results: await Promise.all(
             list.map(user => {
               return authServiceInstance.attachUserRole(user)
-                .then(attached => authServiceInstance.hideSensitive(attached))
+                .then(attached => {
+                  // hide email and phone
+                  // for non-logged client
+                  if (!id) {
+                    return authServiceInstance.hideEssential(
+                      authServiceInstance.hideSensitive(attached))
+                  }
+
+                  return authServiceInstance.hideSensitive(attached)
+                })
                 .catch(err => {
                   logger.error(`Error when attaching user role (id: ${user.id}): ` + err)
                 })

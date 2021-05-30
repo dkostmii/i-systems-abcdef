@@ -4,7 +4,13 @@ import { Op } from 'sequelize'
 
 import argon2, { verify } from 'argon2'
 
-import { IUser, IUserDb, IUserDTO, IUserSignInDTO, IUserSignUpDTO } from '../interfaces/user'
+import { IUser,
+         IUserDb,
+         IUserDTO,
+         IUserPublic,
+         IUserSignInDTO,
+         IUserSignUpDTO } from '../interfaces/user'
+
 import { IUserRole } from '../interfaces/userRole'
 
 import { Logger } from 'winston'
@@ -34,6 +40,14 @@ export class AuthService {
       role: data.role
     }
   }
+
+  hideEssential(data: IUserDTO): IUserPublic {
+    return {
+      id: data.id,
+      fullName: data.fullName,
+      role: data.role
+    }
+  } 
 
   async attachUserRole(data: IUserDb): Promise<IUser> {
     return {
@@ -96,7 +110,7 @@ export class AuthService {
 
       await user.update({ password, salt })
     } catch (e) {
-      return { error: { message: e, status: 401 } }
+      return { error: { message: e.toString(), status: 401 } }
     }
 
     return { 

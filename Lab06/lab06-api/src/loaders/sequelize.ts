@@ -17,8 +17,6 @@ import Logger from './logger'
 // Dir with models
 const basename = path.resolve(path.join(__dirname, '..', 'models'))
 
-console.log(basename)
-
 // Dev or Production?
 const env = process.env.NODE_ENV || 'development';
 
