@@ -5,6 +5,8 @@ import {
   validatePhone,
   validatePassword } from '../Util/Validate'
 
+import './SignInForm.css'
+
 function SignInForm({ refreshUser, submit }) {
   const [state, setState] = useState({
     login: '',
@@ -18,10 +20,13 @@ function SignInForm({ refreshUser, submit }) {
   const [error, setError] = useState(null)
 
   return (
-    <div>
+    <div className="signin-form-container">
       <label>
-        Login
+        <span className="caption">
+          Login
+        </span>
         <input type="text"
+          placeholder="abc123@poczta.pl"
           onInput={
             e => setState(prevState => {
               return {
@@ -34,8 +39,11 @@ function SignInForm({ refreshUser, submit }) {
       </label>
 
       <label>
-        Password
-        <input type="password" 
+        <span className="caption">
+          Password
+        </span>
+        <input type="password"
+          placeholder="hasło"
           onInput={
             e => setState(prevState => { 
               return {
@@ -47,14 +55,15 @@ function SignInForm({ refreshUser, submit }) {
         />
       </label>
 
-      <button 
+      <button
+        className="submit-button"
         disabled={ !valid() }
         onClick={ () => {
             submit(state)
               .then(response => {
                 if (response.error) {
                   setError(response.error.toString())
-                } else if (response.data) {
+                } else if (response.data && response.data.user) {
                   refreshUser({ 
                     id: response.data.user.id,
                     name: response.data.user.fullName

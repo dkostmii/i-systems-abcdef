@@ -6,6 +6,8 @@ import {
   validatePassword
 } from '../Util/Validate'
 
+import './SignUpForm.css'
+
 function SignUpForm({ refreshUser, submit, getUserRoles }) {
   const [state, setState] = useState({
     email: '',
@@ -41,10 +43,13 @@ function SignUpForm({ refreshUser, submit, getUserRoles }) {
   }, [getUserRoles])
 
   return (
-    <div>
+    <div className="signup-form-container">
       <label>
-        FullName
-        <input type="text" 
+        <span className="caption">
+          FullName
+        </span>
+        <input type="text"
+          placeholder="Jan Kowalski"
           onInput={
             e => setState(prevState => {
               return {
@@ -57,8 +62,11 @@ function SignUpForm({ refreshUser, submit, getUserRoles }) {
       </label>
 
       <label>
-        Email
-        <input type="email" 
+        <span className="caption">
+          Email
+        </span>
+        <input type="email"
+          placeholder="abc123@poczta.pl"
           onInput={
             e => setState(prevState => {
               return {
@@ -71,8 +79,11 @@ function SignUpForm({ refreshUser, submit, getUserRoles }) {
       </label>
 
       <label>
-        Phone
+        <span className="caption">
+          Phone
+        </span>
         <input type="tel"
+          placeholder="+48123456789"
           onInput={
             e => setState(prevState => {
               return {
@@ -85,8 +96,12 @@ function SignUpForm({ refreshUser, submit, getUserRoles }) {
       </label>
 
       <label>
-        Password
-        <input type={ state.hidePass ? "password" : "text" }
+        <span className="caption">
+          Password
+        </span>
+        <input 
+          type={ state.hidePass ? "password" : "text" }
+          placeholder="hasło"
           onInput={ 
             e => setState(prevState => {
               return {
@@ -111,7 +126,9 @@ function SignUpForm({ refreshUser, submit, getUserRoles }) {
       </label>
 
       <label>
-        Role
+        <span className="caption">
+          Role
+        </span>
         <select
           onInput={
             e => {
@@ -135,6 +152,7 @@ function SignUpForm({ refreshUser, submit, getUserRoles }) {
       </label>
 
       <button
+          className="submit-button"
           disabled={ !valid() }
           onClick={ 
             () => {

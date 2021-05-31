@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 
 import User from '../Components/User'
 
+
+import './ListUsersPage.css'
+
 function ListUsersPage({ user, userService }) {
   const [state, setState] = useState({
     users: [],
@@ -38,7 +41,7 @@ function ListUsersPage({ user, userService }) {
   }) 
 
   return (
-    <div>
+    <div className="list-users-page-container">
       <h1>ListUsersPage</h1>
       { state.loaded && render }
       { state.error && <p>Error occurred: {state.error} </p>}

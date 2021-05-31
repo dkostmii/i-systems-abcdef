@@ -1,0 +1,27 @@
+.signup-form-container {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 32px;
+}
+
+.signup-form-container input[type="text"],input[type="password"],input[type="tel"],input[type="select"],input[type="email"] {
+  font-size: 16pt;
+  padding: 6px 4px;
+}
+
+label .caption {
+  position: absolute;
+  font-size: 14px;
+
+  margin: -22px 0;
+}
+
+.submit-button {
+  font-size: 14pt;
+
+  width: 128px;
+}

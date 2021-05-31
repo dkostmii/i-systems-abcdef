@@ -1,0 +1,11 @@
+.list-users-page-container {
+  display: flex;
+
+  margin: 10%;
+
+  flex-direction: column;
+
+  gap: 32px;
+
+  align-items: center;
+}

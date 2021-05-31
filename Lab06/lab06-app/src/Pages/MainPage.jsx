@@ -1,8 +1,10 @@
 import React from 'react'
 
+import './MainPage.css'
+
 function MainPage({ user }) {
   return (
-    <div>
+    <div className="main-page-container">
       <h1>Lab06 Three Tier Project</h1>
 
       { user && <h2>Welcome, { user.name }</h2> }

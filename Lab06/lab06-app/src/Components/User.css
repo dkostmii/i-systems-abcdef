@@ -1,0 +1,15 @@
+.user-container {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  background: var(--background-m3);
+
+  border-radius: 48px;
+
+  padding: 24px;
+
+  box-shadow: 0 10px 22px 4px #44444411;
+}

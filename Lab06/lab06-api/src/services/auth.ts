@@ -95,13 +95,13 @@ export class AuthService {
       }
     })
 
+    if (!found) {
+      return { error: { message: "Not found!", status: 404 } }
+    }
+
     const user = await this.writeUserModel.findByPk((found as IUserDb).id)
 
-      if (!user) {
-        return { error: { message: "Not found!", status: 404 } }
-      }
-
-    if (!found) {
+    if (!user) {
       return { error: { message: "Not found!", status: 404 } }
     }
 

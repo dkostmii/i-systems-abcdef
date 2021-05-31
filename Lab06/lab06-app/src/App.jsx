@@ -5,14 +5,17 @@ import {
   Switch,
   Route,
   Link,
-  Redirect
+  Redirect,
 } from 'react-router-dom'
+
+import NavigationLink from './Components/NavigationLink'
 
 import ListUsersPage from './Pages/ListUsersPage'
 import MainPage from './Pages/MainPage'
 import SignInPage from './Pages/SignInPage'
 import SignUpPage from './Pages/SignUpPage'
 import UserProfilePage from './Pages/UserProfilePage'
+import ErrorPage from './Pages/ErrorPage'
 
 import { ServiceProvider } from './Services/ServiceProvider'
 
@@ -20,6 +23,8 @@ import {
   ReadLocalStorage,
   WriteLocalStorage,
   ClearLocalStorage } from './Util/Storage'
+
+import './App.css'
 
 
 function App() {
@@ -30,44 +35,61 @@ function App() {
   const [userService, setUserService] = useState()
   const [userRoleService, setUserRoleService] = useState()
 
-  const initUserService = async () => {
-    setUserService((await ServiceProvider('http://localhost:5000/api'))('UserService'))
-  }
-
-  const initUserRoleService = async () => {
-    setUserRoleService((await ServiceProvider('http://localhost:5000/api'))('UserRoleService'))
-  }
+  const [error, setError] = useState(null)
 
   useEffect(() => {
-    if (!userService) {
-      initUserService()
-      initUserRoleService()
+    const initUserService = async () => {
+        if (!userService) {
+          setUserService((await ServiceProvider('http://localhost:5000/api'))('UserService'))
+        }
+      }
+
+    const initUserRoleService = async () => {
+      if (!userRoleService) {
+        setUserRoleService((await ServiceProvider('http://localhost:5000/api'))('UserRoleService'))
+      }
     }
+
+    fetch('http://localhost:5000/status')
+      .then(response => {
+        if (response.ok) {
+          initUserService()
+          initUserRoleService()
+        }
+      })
+      .catch(() => {
+        setError({ name:'Fetch Error', message: 'Cannot connect to server' })
+      })
+
+
 
     if (state.user) {
       WriteLocalStorage('user', state.user)
     }
-  }, [state.user, userService])
+  }, [state.user, userService, userRoleService])
 
   return (
     <Router>
       <div className="app-container">
+
         <div className="header-container">
+
           <div className="logo-container">
             <Link to="/">Three Tier</Link>
           </div>
 
-          <Link to="/users">Our users</Link>
+          <nav>
+          <NavigationLink to="/users">Our users</NavigationLink>
 
           { !state.user ?
-            <nav>
-              <Link to="/signin">Sign in</Link>
-              <Link to="/signup">Sign up</Link>
-            </nav>
+            <>
+              <NavigationLink to="/signin">Sign in</NavigationLink>
+              <NavigationLink to="/signup">Sign up</NavigationLink>
+            </>
           :
-            <nav>
-              <Link to="/profile">{state.user.name}</Link>
-              <button 
+            <>
+              <NavigationLink to="/profile">{state.user.name}</NavigationLink>
+              <button className="button-link"
                 onClick={ 
                   () => {
                     setState(prevState => { 
@@ -77,7 +99,8 @@ function App() {
                   } }>
                 Log out
               </button>
-            </nav> }
+            </> }
+            </nav>
 
         </div>
 
@@ -89,7 +112,15 @@ function App() {
           <MainPage user={ state.user }/>
         </Route>
 
+        <Route path="/error">
+          { error ? <ErrorPage error={error} /> : <Redirect to="/" /> }
+        </Route>
+
         <Route path="/signin">
+          {
+            error && <Redirect to="/error" />
+          }
+
           {
             !state.user ?
               <SignInPage 
@@ -102,6 +133,7 @@ function App() {
         </Route>
 
         <Route path="/signup">
+          { error && <Redirect to="/error" />  }
           {
             !state.user ?
               <SignUpPage
@@ -115,10 +147,16 @@ function App() {
         </Route>
 
         <Route path="/users">
+          {
+            error && <Redirect to="/error" />
+          }
           <ListUsersPage user={state.user} userService={userService} />
         </Route>
 
         <Route path="/profile">
+          {
+            error && <Redirect to="/error" />
+          }
           { 
             state.user ?
               <UserProfilePage user={state.user} userService={userService} />

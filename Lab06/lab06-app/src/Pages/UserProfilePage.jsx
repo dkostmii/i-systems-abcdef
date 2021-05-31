@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react'
 
+import User from '../Components/User'
+
+import './UserProfilePage.css'
+
 function UserProfilePage({ user, userService }) {
   const [state, setState] = useState({
     profile: undefined,
@@ -25,13 +29,23 @@ function UserProfilePage({ user, userService }) {
   }, [state.profile, state.error, user.id, userService])
 
   return (
-    <div>
+    <div className="userprofile-page-container">
       { !state.loaded && <h1>Loading...</h1> }
       { state.profile && !state.error &&
           <h1>Welcome, { state.profile.fullName }</h1> }
       {
         state.error && <p>Error occurred: {state.error}</p>
       }
+      { state.profile &&
+      <>
+        Your data: 
+        <User 
+          fullName={state.profile.fullName} 
+          phone={state.profile.phone}
+          email={state.profile.email}
+          role={state.profile.role}
+          />
+      </> }
     </div>
   )
 }
