@@ -1,11 +1,11 @@
-.list-users-page-container {
+.not-found-container {
   display: flex;
 
-  margin: 2%  0 10% 0;
+  margin: 7.5%;
 
   flex-direction: column;
 
-  gap: 32px;
+  gap: 12px;
 
   align-items: center;
 }

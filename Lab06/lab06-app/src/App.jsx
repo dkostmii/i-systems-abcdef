@@ -16,6 +16,7 @@ import SignInPage from './Pages/SignInPage'
 import SignUpPage from './Pages/SignUpPage'
 import UserProfilePage from './Pages/UserProfilePage'
 import ErrorPage from './Pages/ErrorPage'
+import NotFound from './Pages/NotFound'
 
 import { ServiceProvider } from './Services/ServiceProvider'
 
@@ -113,7 +114,7 @@ function App() {
         </Route>
 
         <Route path="/error">
-          { error ? <ErrorPage error={error} /> : <Redirect to="/" /> }
+          { error ? <ErrorPage error={error} /> : <Redirect to="/404" /> }
         </Route>
 
         <Route path="/signin">
@@ -163,6 +164,14 @@ function App() {
             :
               <Redirect to="/signin" /> 
           }
+        </Route>
+
+        <Route path="/404">
+          <NotFound />
+        </Route>
+
+        <Route path="*">
+          <Redirect to="/404" />
         </Route>
       </Switch>
     </Router>

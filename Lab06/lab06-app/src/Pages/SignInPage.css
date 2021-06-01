@@ -6,3 +6,7 @@
 
   align-items: center;
 }
+
+.signin-page-container h1 {
+  margin-block-end: 3%;
+}

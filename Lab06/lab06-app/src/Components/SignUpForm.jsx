@@ -44,112 +44,115 @@ function SignUpForm({ refreshUser, submit, getUserRoles }) {
 
   return (
     <div className="signup-form-container">
-      <label>
-        <span className="caption">
-          FullName
-        </span>
-        <input type="text"
-          placeholder="Jan Kowalski"
-          onInput={
-            e => setState(prevState => {
-              return {
-                ...prevState,
-                fullName: e.target.value
-              }
-            })
-          }
-        />
-      </label>
-
-      <label>
-        <span className="caption">
-          Email
-        </span>
-        <input type="email"
-          placeholder="abc123@poczta.pl"
-          onInput={
-            e => setState(prevState => {
-              return {
-                ...prevState,
-                email: e.target.value,
-              }
-            })
-          }
-        />
-      </label>
-
-      <label>
-        <span className="caption">
-          Phone
-        </span>
-        <input type="tel"
-          placeholder="+48123456789"
-          onInput={
-            e => setState(prevState => {
-              return {
-                ...prevState,
-                phone: e.target.value,
-              }
-            })
-          }
-        /> 
-      </label>
-
-      <label>
-        <span className="caption">
-          Password
-        </span>
-        <input 
-          type={ state.hidePass ? "password" : "text" }
-          placeholder="hasło"
-          onInput={ 
-            e => setState(prevState => {
-              return {
-                ...prevState,
-                password: e.target.value,
-              }
-            })
-          }
-        />
-        <button
-          onClick={
-            () => setState(prevState => {
-              return {
-                ...prevState,
-                hidePass: !state.hidePass 
-              }
-            })
-          }
-        >
-          { state.hidePass ? 'Show' : 'Hide' }
-        </button>
-      </label>
-
-      <label>
-        <span className="caption">
-          Role
-        </span>
-        <select
-          onInput={
-            e => {
-              setState(prevState => {
-                return {...prevState, role: e.target.value}
+      <div className="input-fields-container">
+        <label>
+          <span className="caption">
+            FullName
+          </span>
+          <input type="text"
+            placeholder="Jan Kowalski"
+            onInput={
+              e => setState(prevState => {
+                return {
+                  ...prevState,
+                  fullName: e.target.value
+                }
               })
             }
-          }
-        >
-          {
-            userRoles &&
-            userRoles.map(role => {
-              return (
-                <option key={role.id} value={role.name}>
-                  {role.name}
-                </option>
-              )
-            })
-          }
-        </select>
-      </label>
+          />
+        </label>
+
+        <label>
+          <span className="caption">
+            Email
+          </span>
+          <input type="email"
+            placeholder="abc123@poczta.pl"
+            onInput={
+              e => setState(prevState => {
+                return {
+                  ...prevState,
+                  email: e.target.value,
+                }
+              })
+            }
+          />
+        </label>
+
+        <label>
+          <span className="caption">
+            Phone
+          </span>
+          <input type="tel"
+            placeholder="+48123456789"
+            onInput={
+              e => setState(prevState => {
+                return {
+                  ...prevState,
+                  phone: e.target.value,
+                }
+              })
+            }
+          /> 
+        </label>
+
+        <label>
+          <span className="caption">
+            Password
+          </span>
+          <input 
+            type={ state.hidePass ? "password" : "text" }
+            placeholder="hasło"
+            onInput={ 
+              e => setState(prevState => {
+                return {
+                  ...prevState,
+                  password: e.target.value,
+                }
+              })
+            }
+          />
+          <button
+            className="button-pass"
+            onClick={
+              () => setState(prevState => {
+                return {
+                  ...prevState,
+                  hidePass: !state.hidePass 
+                }
+              })
+            }
+          >
+            { state.hidePass ? 'Show' : 'Hide' }
+          </button>
+        </label>
+
+        <label>
+          <span className="caption">
+            Role
+          </span>
+          <select
+            onInput={
+              e => {
+                setState(prevState => {
+                  return {...prevState, role: e.target.value}
+                })
+              }
+            }
+          >
+            {
+              userRoles &&
+              userRoles.map(role => {
+                return (
+                  <option key={role.id} value={role.name}>
+                    {role.name}
+                  </option>
+                )
+              })
+            }
+          </select>
+        </label>
+      </div>
 
       <button
           className="submit-button"
@@ -157,7 +160,7 @@ function SignUpForm({ refreshUser, submit, getUserRoles }) {
           onClick={ 
             () => {
               const data = {...state}
-              Reflect.removeProperty(data, 'hidePass')
+              Reflect.deleteProperty(data, 'hidePass')
               submit(data)
                 .then(response => {
                   if (response.error) {
